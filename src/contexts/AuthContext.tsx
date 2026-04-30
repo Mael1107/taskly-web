@@ -1,0 +1,66 @@
+"use client"
+import { createContext, useContext, useState, useEffect, ReactNode } from "react"
+import { login, register, logout, getMe } from "../services/authService"
+
+interface User {
+    id: number
+    name: string
+    email: string
+}
+
+interface AuthContextType {
+    user: User | null
+    loading: boolean
+    handleLogin: (email: string, password: string) => Promise<void>
+    handleRegister: (name: string, email: string, password: string) => Promise<void>
+    handleLogout: () => void
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
+
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+    const [user, setUser] = useState<User | null>(null)
+    const [loading, setLoading] = useState(true)
+
+    const handleRegister = async (name: string, email: string, password: string) => {
+        const response = await register({name, email, password})
+        setUser(response.user)
+    }
+
+    const handleLogin = async (email: string, password: string) => {
+        const response = await login({email, password})
+        setUser(response.user)
+    }
+
+    const handleLogout = () => {
+        logout()
+        setUser(null)
+    }
+    
+    useEffect(() => {
+        const loadUser = async () => {
+            const token = localStorage.getItem("token")
+
+            if (token) {
+                try {
+                    const user = await getMe()
+                    setUser(user)
+                } catch {
+                    localStorage.removeItem("token")
+                }
+            }
+            setLoading(false)
+        }
+    }, [])
+
+    return (
+        <AuthContext.Provider value={{ user, loading, handleLogin, handleRegister, handleLogout }}>
+            {children}
+        </AuthContext.Provider>
+    )
+}
+
+export const useAuth = () => {
+    const context = useContext(AuthContext)
+    return context
+}
