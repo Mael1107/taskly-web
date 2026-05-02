@@ -1,6 +1,6 @@
 "use client"
 import { createContext, useContext, useState, useEffect, ReactNode } from "react"
-import { login, register, logout, getMe } from "../services/authService"
+import { login, register, logout, getMe } from "../services/AuthService"
 
 interface User {
     id: number
@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             }
             setLoading(false)
         }
+        loadUser()
     }, [])
 
     return (
