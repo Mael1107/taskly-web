@@ -33,7 +33,7 @@ const RegisterForm = () => {
 
         try {
             await handleRegister(name, email, password)
-            router.push("/dashboard")
+            router.push("/")
         } catch {
             setError("Error creating account! Try again.")
         }

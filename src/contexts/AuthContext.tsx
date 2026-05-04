@@ -2,11 +2,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react"
 import { login, register, logout, getMe } from "../services/AuthService"
 
-interface User {
-    id: number
-    name: string
-    email: string
-}
+import { User, AuthResponse } from "@/types"
 
 interface AuthContextType {
     user: User | null
@@ -39,7 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     
     useEffect(() => {
         const loadUser = async () => {
-            const token = localStorage.getItem("token")
+            const token = localStorage.getItem("token") 
 
             if (token) {
                 try {

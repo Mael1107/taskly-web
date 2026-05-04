@@ -22,7 +22,7 @@ const LoginForm = () => {
 
         try {
             await handleLogin(email, password)
-            router.push("/dashboard")
+            router.push("/")
         } catch {
             setError("Error creating account! Try again.")
         }
