@@ -6,7 +6,7 @@ import { Task } from "@/types"
 import TaskCard from "../components/TaskCard"
 
 const Dashboard = () => {
-  const { user } = useAuth()
+  const { user, handleLogout } = useAuth()
   const [tasks, setTasks] = useState<Task[]>([])
   const [newTitle, setNewTitle] = useState("")
 
@@ -19,7 +19,7 @@ const Dashboard = () => {
     }
   }
 
-  const handleCreateTask = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateTask = async (e: React.SubmitEvent) => {
     e.preventDefault()
     if (newTitle.trim() === "") return
     try {
@@ -58,6 +58,10 @@ const Dashboard = () => {
           />
         ))}
       </ul>
+
+      <button onClick={handleLogout}>
+        logout
+      </button>
     </main>
   )
 }

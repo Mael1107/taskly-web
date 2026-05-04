@@ -38,10 +38,10 @@ export const getMe = async (): Promise<AuthResponse["user"]> => {
 }
 
 const setTokenCookie = (token: string) => {
-    document.cookie = `token=${token}; path="; max-age=${60 * 60 * 24}`
+    document.cookie = `token=${token}; path=; max-age=${60 * 60 * 24}`
 }
 
 const removeTokenCookie = () => {
-    document.cookie = `token=; path=/ max-age=0`
+    document.cookie = `token=; path=/; max-age=0`
 }
 

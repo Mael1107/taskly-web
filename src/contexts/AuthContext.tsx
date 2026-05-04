@@ -31,11 +31,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const handleLogout = () => {
         logout()
         setUser(null)
+        window.location.href = "/login"
     }
     
     useEffect(() => {
         const loadUser = async () => {
-            const token = localStorage.getItem("token") 
+            const token = localStorage.getItem("token")     
 
             if (token) {
                 try {
